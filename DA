@@ -1,0 +1,227 @@
+select * from INX_Future_Inc_Employee_Perform$
+
+--Performance Percentage by each department
+
+select distinct(EmpDepartment),count(EmpNumber) as NumberOfEmployees,sum(PerformanceRating)/count(PerformanceRating) as PerformancePercentage 
+from INX_Future_Inc_Employee_Perform$
+group by EmpDepartment
+order by PerformancePercentage
+
+--- Performance rating <3
+
+select EmpDepartment,count(EmpNumber) as EmployeeCount
+from INX_Future_Inc_Employee_Perform$
+where PerformanceRating<3
+group by EmpDepartment
+order by EmployeeCount
+
+---Marital Status vs Performance rating 
+
+select MaritalStatus,Avg(PerformanceRating) as AvgPerformance
+from INX_Future_Inc_Employee_Perform$
+group by MaritalStatus
+order by AvgPerformance
+
+-- BusinessTravelFrequency VS PerformanceRating
+
+select EmpDepartment,BusinessTravelFrequency,PerformanceRating
+from INX_Future_Inc_Employee_Perform$
+
+order by PerformanceRating
+
+-- EmpEducationLevel vs PerformanceRating
+
+select EmpJobRole,EmpEducationLevel,PerformanceRating
+from INX_Future_Inc_Employee_Perform$
+
+order by PerformanceRating
+
+-- did did not find much correlation between business travel and performance rate 
+
+select EmpDepartment,EmpEnvironmentSatisfaction,BusinessTravelFrequency,EmpLastSalaryHikePercent,PerformanceRating
+from INX_Future_Inc_Employee_Perform$
+where PerformanceRating<3 and EmpLastSalaryHikePercent>20
+order by 2,3
+
+--EmpEnvironmentSatisfaction Vs PerformanceRating
+-- 
+
+select EmpDepartment,EmpEnvironmentSatisfaction,PerformanceRating
+from INX_Future_Inc_Employee_Perform$
+order by 2 desc
+
+--Avg EmpEnvironmentSatisfaction by departmnet 
+
+select EmpDepartment,Avg(EmpEnvironmentSatisfaction) As EnviSatisfaction,Avg(PerformanceRating) as AvgPerformace 
+from INX_Future_Inc_Employee_Perform$
+group by EmpDepartment
+order by 2 desc
+
+--EmpEnvironmentSatisfactionCount having ppor performace count on each departmnet 
+
+select EmpDepartment,count(EmpEnvironmentSatisfaction) as EmpEnvironmentSatisfactionCount
+from INX_Future_Inc_Employee_Perform$
+where PerformanceRating<3
+group by EmpDepartment
+order by 2 
+
+
+--EmpEnvironmentSatisfaction,EmpWorkLifeBalance,ExperienceYearsAtThisCompany
+
+select EmpDepartment,EmpWorkLifeBalance,ExperienceYearsAtThisCompany
+from INX_Future_Inc_Employee_Perform$
+order by 2 desc
+
+
+--Avg performace rating 
+
+select EmpDepartment,avg(EmpEnvironmentSatisfaction) as AvgEmpEnvironmentSatisfaction, avg(ExperienceYearsAtThisCompany) as AvgExperienceYearsAtThisCompany,Avg(PerformanceRating) as AvgPerformanceRating
+from INX_Future_Inc_Employee_Perform$
+group by EmpDepartment
+order by 2 desc
+
+--   EmpEnvironmentSatisfaction ----
+
+select EmpDepartment,EmpEnvironmentSatisfaction,EmpLastSalaryHikePercent,PerformanceRating
+from INX_Future_Inc_Employee_Perform$
+where PerformanceRating<3 and EmpLastSalaryHikePercent>20
+order by 2,3
+
+-- No relation BW overtime and Envirnmental satisfaction 
+
+select EmpDepartment,EmpEnvironmentSatisfaction,OverTime,EmpLastSalaryHikePercent,PerformanceRating
+from INX_Future_Inc_Employee_Perform$
+where PerformanceRating<3 and EmpLastSalaryHikePercent>20
+order by 2,3
+
+---Worklife balence is not related to Environment satisfaction ---
+select EmpDepartment,EmpEnvironmentSatisfaction,EmpWorkLifeBalance,EmpLastSalaryHikePercent,PerformanceRating
+from INX_Future_Inc_Employee_Perform$
+where PerformanceRating<3 and EmpLastSalaryHikePercent>20
+order by 2,3
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+--HikePercentage Vs Performance 
+
+select EmpDepartment,EmpLastSalaryHikePercent,PerformanceRating
+from INX_Future_Inc_Employee_Perform$
+--where PerformanceRating<3
+order by 3
+
+--Avg hike value with poor performance 
+
+select EmpDepartment,Avg(EmpLastSalaryHikePercent) As AvgHike,Avg(PerformanceRating) as AvgPerformace 
+from INX_Future_Inc_Employee_Perform$
+where PerformanceRating<3
+group by EmpDepartment
+order by 2
+
+----Avg hike value with high performance 
+
+select EmpDepartment,Avg(EmpLastSalaryHikePercent) As AvgHike,Avg(PerformanceRating) as AvgPerformace 
+from INX_Future_Inc_Employee_Perform$
+where PerformanceRating>3
+group by EmpDepartment
+order by 2
+
+--checking if there any relation bw last slary hike /yearsincelast peromotion
+
+
+select EmpDepartment,ExperienceYearsAtThisCompany,YearsSinceLastPromotion,EmpLastSalaryHikePercent,PerformanceRating
+from INX_Future_Inc_Employee_Perform$
+--where YearsSinceLastPromotion=0 
+order by 3 desc
+
+--- YearsSinceLastPromotion,EmpLastSalaryHikePercent,PerformanceRating-----
+
+select EmpDepartment,YearsSinceLastPromotion,EmpLastSalaryHikePercent,PerformanceRating
+from INX_Future_Inc_Employee_Perform$
+--where YearsSinceLastPromotion=0 
+order by 3,4
+
+
+
+select EmpDepartment,EmpRelationshipSatisfaction,EmpLastSalaryHikePercent,PerformanceRating,YearsWithCurrManager
+from INX_Future_Inc_Employee_Perform$
+
+--NO relation with Manager relation and poor performance with current hike 
+
+select EmpDepartment,YearsWithCurrManager,EmpLastSalaryHikePercent,PerformanceRating
+from INX_Future_Inc_Employee_Perform$
+where PerformanceRating<3 and EmpLastSalaryHikePercent>20
+order by 2,3
+
+---------------------------not much findings -----------------
+
+select EmpDepartment,YearsSinceLastPromotion,EmpLastSalaryHikePercent,PerformanceRating
+from INX_Future_Inc_Employee_Perform$
+where PerformanceRating<3 and EmpLastSalaryHikePercent>20
+order by 2,3
+
+
+
+
+-- did not find any corrulation---not rally needed record-----------
+
+select EmpDepartment,EmpEnvironmentSatisfaction,NumCompaniesWorked,EmpLastSalaryHikePercent,PerformanceRating
+from INX_Future_Inc_Employee_Perform$
+where PerformanceRating<3 and EmpLastSalaryHikePercent>20
+order by 2,3
+
+
+
+-------------------------------------------------------------------
+select EmpDepartment,EmpEnvironmentSatisfaction,EmpLastSalaryHikePercent,PerformanceRating
+from INX_Future_Inc_Employee_Perform$
+where PerformanceRating<3 and EmpLastSalaryHikePercent>20
+order by 2,3
+
+
+select EmpDepartment,EmpEnvironmentSatisfaction,TotalWorkExperienceInYears,ExperienceYearsAtThisCompany,EmpJobLevel,YearsSinceLastPromotion,EmpLastSalaryHikePercent,PerformanceRating
+from INX_Future_Inc_Employee_Perform$
+where PerformanceRating<3 and EmpLastSalaryHikePercent>20
+order by 6 desc
+----------------------------------------------------------------
+
+
+---joblevel and Empsatisfaction 
+
+select EmpDepartment,EmpEnvironmentSatisfaction,EmpJobLevel,YearsSinceLastPromotion,PerformanceRating
+from INX_Future_Inc_Employee_Perform$
+where PerformanceRating<3 and EmpLastSalaryHikePercent>20 and TotalWorkExperienceInYears=ExperienceYearsAtThisCompany
+order by 4 desc
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+select Age,TotalWorkExperienceInYears,ExperienceYearsAtThisCompany,ExperienceYearsInCurrentRole
+from INX_Future_Inc_Employee_Perform$
+
+order by Age
+
+---Age, workexperience,performance rating  ---
+
+select Age,TotalWorkExperienceInYears,ExperienceYearsAtThisCompany,PerformanceRating
+from INX_Future_Inc_Employee_Perform$
+order by PerformanceRating
+
+-------------------------------------------------------
+
+--Performance rating and Avg Environment Satisfaction 
+
+select Avg(EmpEnvironmentSatisfaction) as AvgEmpEnvironmentSatisfaction ,PerformanceRating
+from INX_Future_Inc_Employee_Perform$
+group by PerformanceRating
+
+
+Select EmpDepartment,EmpEnvironmentSatisfaction,EmpLastSalaryHikePercent, EmpWorkLifeBalance,PerformanceRating
+from INX_Future_Inc_Employee_Perform$
+where PerformanceRating<3 
+order by 5
+
+
+
+
+
+
+
+
